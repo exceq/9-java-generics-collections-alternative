@@ -8,12 +8,16 @@ public class Operator<T> {
     //private final Class<? extends Collection> type;
 
     private Operator(Collection<T> collection) {
+        if (collection==null)
+          throw new NullPointerException("Collection is null!");
         storage = collection;
         //type = collection.getClass();
+
     }
 
     public static <T> Operator<T> modify(Collection<T> collection){
         return new Operator<>(collection);
+
     }
 
     public Operator<T> add(T value){
