@@ -1,9 +1,5 @@
 import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
-
 import java.util.*;
 import java.util.function.Predicate;
 
@@ -19,9 +15,10 @@ public class Tests {
         check(result1.toString(), "[abc, de, f, 1234, abc, de, f, 1234, zzzzz]");
     }
 
-    //тест не всегда проходит из-за особенностей HashSet'а
-    //То есть числа идут в перемешку и результат выполнения теста все время разный и не совпадает с ожидаемым результатом
-    //@Test
+    //тест всё ещё странно работает
+    //Тест проходит, но если много раз запускать тест,
+    //то может получится "[23456, 12345, 99999]" вместо "[12345, 23456, 99999]"
+    @Test
     public void test2() {
         LinkedHashSet<Integer> set1 = new LinkedHashSet<>(Set.of(12345, 23456, 34567, 45678, 56789));
         Comparator<Number> compareNumbers = Comparator.comparingDouble(Number::doubleValue);
@@ -50,7 +47,6 @@ public class Tests {
 
     @Test
     public void test5() {
-        var a = 10;
         ArrayList<String> list1 = new ArrayList<>(List.of("abc", "de", "f"));
         ArrayList<String> result1 = Operator.modify(list1).add("1234").add(list1).add("zzzzz").get();
         ArrayList<String> result3 = Operator.modify(result1).remove(s -> s.equals("f")).sort(Comparator.naturalOrder()).get();
